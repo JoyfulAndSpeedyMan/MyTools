@@ -9,10 +9,12 @@ import java.util.Scanner;
  * 格式
  * @author zhapshipin
  */
-public class SQLFormat {
+public class SqlFormat {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         ArrayList<String> sqlLines = new ArrayList<>(20);
+        boolean generateVar = true;
+        String varName = "sql";
         String line;
         int max = Integer.MIN_VALUE;
         while (true) {
@@ -28,8 +30,13 @@ public class SQLFormat {
         }
         String format = "%s.append(\"%-" + (max + 3) + "s\");";
         StringBuilder sql = new StringBuilder();
+        if(generateVar){
+            sql.append("StringBuilder ");
+            sql.append(varName);
+            sql.append(" = new StringBuilder();\n");
+        }
         for (String sqlLine : sqlLines) {
-            String sql1 = String.format(format, "sql", sqlLine);
+            String sql1 = String.format(format, varName, sqlLine);
             sql.append(sql1);
             sql.append("\n");
         }
